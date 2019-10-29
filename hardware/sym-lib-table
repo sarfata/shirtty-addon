@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name ATSAMD21E18A-AF)(type Legacy)(uri ${KIPRJMOD}/libraries/ATSAMD21E18A-AF/ATSAMD21E18A-AF.lib)(options "")(descr ""))
+  (lib (name TC2030-CTX)(type Legacy)(uri ${KIPRJMOD}/libraries/TC2030-CTX/TC2030-CTX.lib)(options "")(descr ""))
+  (lib (name tsop77438)(type Legacy)(uri ${KIPRJMOD}/libraries/tsop77438.lib)(options "")(descr ""))
+)

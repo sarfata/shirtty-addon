@@ -1,0 +1,7 @@
+(fp_lib_table
+  (lib (name ATSAMD21E18A-AF)(type Legacy)(uri ${KIPRJMOD}/libraries/ATSAMD21E18A-AF/ATSAMD21E18A-AF.mod)(options "")(descr ""))
+  (lib (name usb-connector)(type KiCad)(uri ${KIPRJMOD}/libraries/usb-connector.pretty)(options "")(descr ""))
+  (lib (name "Tag Connect")(type KiCad)(uri "${KIPRJMOD}/libraries/Tag Connect")(options "")(descr ""))
+  (lib (name tsop77438)(type KiCad)(uri ${KIPRJMOD}/libraries/tsop77438.pretty)(options "")(descr ""))
+  (lib (name shirtty)(type KiCad)(uri ${KIPRJMOD}/libraries/shirtty.pretty)(options "")(descr ""))
+)

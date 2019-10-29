@@ -1,0 +1,35 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# TC2030-CTX
+#
+DEF TC2030-CTX J 0 40 Y Y 1 L N
+F0 "J" -400 250 50 H V L BNN
+F1 "TC2030-CTX" -401 -401 50 H V L BNN
+F3 "TC2030-CTX" 0 0 50 H I L BNN
+F4 "None" 0 0 50 H I L BNN
+F5 "Cbl 10pos For Cortex Processors" 0 0 50 H I L BNN
+F6 "Unavailable" 0 0 50 H I L BNN
+F7 "None" 0 0 50 H I L BNN
+F8 "Tag-Connect LLC" 0 0 50 H I L BNN
+$FPLIST
+ TC2030-IDC-NL
+ TC2030-IDC
+$ENDFPLIST
+DRAW
+P 2 0 0 10 -400 200 -400 -300 N
+P 2 0 0 10 -400 -300 400 -300 N
+P 2 0 0 10 400 -300 400 200 N
+P 2 0 0 10 400 200 -400 200 N
+X VCC 1 -500 100 100 R 40 40 0 0 B 
+X GND 5 -500 -200 100 R 40 40 0 0 B 
+X TMS 2 500 100 100 L 40 40 0 0 B 
+X TCK 4 500 0 100 L 40 40 0 0 B 
+X TDO 6 500 -100 100 L 40 40 0 0 B 
+X ~RESET~ 3 500 -200 100 L 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library
