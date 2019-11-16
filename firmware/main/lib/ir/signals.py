@@ -1,20 +1,18 @@
 
 import math
 
-class Ir(object):
-    pass
-
-class IrType(object):
+class Signals(object):
+    tolerance = 0
     UNKNOWN = None
     @classmethod
     def match(cls, required_len, actual_codes, debug=False):
         if len(actual_codes) != required_len:
             if debug: print("wrong number of codes {}".format(len(actual_codes)))
-            return IrType.UNKNOWN
+            return Signals.UNKNOWN
         for kind, code in cls._signals.items():
             if cls.match_against_known(actual_codes, code):
                 return kind
-        return IrType.UNKNOWN
+        return Signals.UNKNOWN
 
     @classmethod
     def match_against_known(cls, actual, known_reference, debug=False):

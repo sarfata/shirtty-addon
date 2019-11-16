@@ -1,7 +1,7 @@
 
-from lib.ir.ir import Ir, IrType
+from ir.signals import Signals
 
-class Nerf(IrType):
+class Nerf(Signals):
     tolerance = 150 # microseconds
     NERF_TEAM_1 = 'nerf_team_1'
     NERF_TEAM_2 = 'nerf_team_2' 
@@ -10,14 +10,14 @@ class Nerf(IrType):
         NERF_TEAM_2: [2935, 6037, 2957, 2038, 940, 2047, 961, 2039, 914, 2073, 1957, 2042, 910, 2094, 940, 2042, 936]
     }
 
-class Pulses(Ir):
+class Pulses():
     nerf = Nerf
     @staticmethod
-    def match(actual_codes, debug=False):
-        nerf = Pulses.nerf.match(17, actual_codes, debug)
+    def match(actual_pulses, debug=False):
+        if not actual_pulses: return Signals.UNKNOWN
+        nerf = Pulses.nerf.match(17, actual_pulses, debug)
         if nerf: return nerf
-
-        return IrType.UKNOWN
+        return Signals.UNKNOWN
 
 
 def analyse_badge_pulse():
