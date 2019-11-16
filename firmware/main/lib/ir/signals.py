@@ -15,9 +15,13 @@ class Signals(object):
         return Signals.UNKNOWN
 
     @classmethod
-    def match_against_known(cls, actual, known_reference, debug=False):
-        for i in range(0, len(known_reference), 1):
-            if math.fabs(actual[i] - known_reference[i]) > cls.tolerance:
-                if debug: print("Signal {} does not match {} vs {}".format(i, actual[i], known_reference[i]))
-                return False
-        return True
+    def match_against_known(cls, actual, list_or_lambda, debug=False):
+        if isinstance(list_or_lambda, list):
+            for i in range(0, len(list_or_lambda), 1):
+                if math.fabs(actual[i] - list_or_lambda[i]) > cls.tolerance:
+                    if debug: print("Signal {} does not match {} vs {}".format(i, actual[i], list_or_lambda[i]))
+                    return False
+            return True
+        
+        # assume lambda actual: return boolean
+        return list_or_lambda(actual)

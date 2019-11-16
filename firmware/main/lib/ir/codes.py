@@ -7,20 +7,6 @@ class Shirtty(Signals):
         COLOR_SYNC: lambda actual: len(actual) == 5 and actual[0:4] == [0xde, 0xad, 0xbe, 0xef]
     }
 
-    @classmethod
-    def match(cls, actual_codes, debug=False):
-        print("Hi!")
-        if Shirtty._signals[Shirtty.COLOR_SYNC](actual_codes):
-        #  len(actual_codes) == required_len and actual_codes[0:4] == _signals.COLOR_SYNC:
-            return Shirtty.COLOR_SYNC
-        # elif len(actual_codes) != required_len:
-        #     if debug: print("wrong number of codes {}".format(len(actual_codes)))
-        #     return IrType.UNKNOWN
-        for kind, code in cls._signals.items():
-            if cls.match_against_known(actual_codes, code):
-                return kind
-        return IrType.UNKNOWN
-
 class Adafruit(Signals):
     # Names
     ADAFRUIT_1 = 'adafruit_1'
