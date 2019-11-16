@@ -10,10 +10,10 @@ blue = pulseio.PWMOut(board.D7, frequency=38000, duty_cycle=0)
 # https://codegolf.stackexchange.com/questions/150250/hsl-to-rgb-values
 # input h=[0,6[ s=[0,1] L=[0,1]
 def hsl_to_rgb(h,s,l):
-    c=(1-abs(2*l-1))*s;
-    m=l-c/2;
-    x=c*(1-abs(h%2-1))+m;
-    c+=m;
+    c=(1-abs(2*l-1))*s
+    m=l-c/2
+    x=c*(1-abs(h%2-1))+m
+    c+=m
     return[c,m,x,c,m,x,m,c,x,m][7-int(h)*5%9:][:3]
 
 def rgb_off():
