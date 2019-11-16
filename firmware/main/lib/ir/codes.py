@@ -1,12 +1,9 @@
 from ir.signals import Signals
-
 class Shirtty(Signals):
     COLOR_SYNC = 'color_sync'
-
     _signals = {
         COLOR_SYNC: lambda actual: len(actual) == 5 and actual[0:4] == [0xde, 0xad, 0xbe, 0xef]
     }
-
 class Adafruit(Signals):
     # Names
     ADAFRUIT_1 = 'adafruit_1'
@@ -24,7 +21,6 @@ class Adafruit(Signals):
         ADAFRUIT_5: [255, 2, 87, 168],
         ADAFRUIT_6: [255, 2, 151, 104]
     }
-
 class Sharp(Signals):
     # Names
     POWER = 'power'
@@ -32,20 +28,17 @@ class Sharp(Signals):
     _signals = {
         POWER: [124, 93]
     }
-
 class Vizio(Signals):
     # Names
     POWER = 'power'
     _signals = {
         POWER: [223, 32, 239, 16]
     }
-
 class Codes():
     adafruit = Adafruit
     sharp = Sharp
     vizio = Vizio
     shirtty = Shirtty
-
     @staticmethod
     def match(actual_codes, debug=False):
         if actual_codes is None: return Signals.UNKNOWN
@@ -53,5 +46,4 @@ class Codes():
         if adafuit: return adafuit
         shirtty = Codes.shirtty.match(actual_codes)
         if shirtty: return shirtty
-
         return Signals.UNKNOWN

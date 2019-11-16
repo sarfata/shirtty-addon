@@ -1,6 +1,4 @@
-
 import math
-
 class Signals(object):
     tolerance = 0
     UNKNOWN = None
@@ -13,7 +11,6 @@ class Signals(object):
             if cls.match_against_known(actual_codes, code):
                 return kind
         return Signals.UNKNOWN
-
     @classmethod
     def match_against_known(cls, actual, list_or_lambda, debug=False):
         if isinstance(list_or_lambda, list):
@@ -22,6 +19,5 @@ class Signals(object):
                     if debug: print("Signal {} does not match {} vs {}".format(i, actual[i], list_or_lambda[i]))
                     return False
             return True
-        
         # assume lambda actual: return boolean
         return list_or_lambda(actual)
