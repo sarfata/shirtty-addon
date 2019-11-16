@@ -1,0 +1,103 @@
+# Write your code here :-)
+import board
+import pulseio
+import time
+import adafruit_irremote
+import random
+import math
+import board
+from i2cslave import I2CSlave
+from lib.color import rgb_off, set_color_hsl, do_the_color_ramp_dance
+
+# No IR Out without an extra capacitor on the power supply
+# irtx = pulseio.PWMOut(board.IR_TX, frequency=38000, duty_cycle=2 ** 15)
+# irout = pulseio.PulseOut(irtx)
+
+# Measuring IR pulses
+pulsein = pulseio.PulseIn(board.IR_RX, maxlen=200, idle_state=True)
+
+# encoder = adafruit_irremote.GenericTransmit(header=[9500, 4500], one=[550, 550],
+#                                             zero=[550, 1700], trail=0)
+decoder = adafruit_irremote.GenericDecode()
+
+
+# i2c.writeto(0x42, bytes([0x42]), stop=False)
+i2c_slave = I2CSlave(board.SCL, board.SDA, (0x42, 0x44))
+
+def match_nerf_pulses(pulses):
+    if len(pulses) != 17:
+        print("wrong number of pulses {}".format(len(pulses)))
+        return None
+
+    team_1 = [2957, 5996, 2974, 2009, 991, 1987, 987, 2008, 992, 1987, 983, 2008, 1962, 2012, 987, 2008, 966]
+    team_2 = [2935, 6037, 2957, 2038, 940, 2047, 961, 2039, 914, 2073, 1957, 2042, 910, 2094, 940, 2042, 936]
+
+
+    def match_against_known_pulse(pulses, knownReference):
+        for i in range(0, 17, 1):
+            if math.fabs(pulses[i] - knownReference[i]) > 150:
+                print("pulse {} does not match {} vs {}".format(i, pulses[i], knownReference[i]))
+                return None
+        return True
+
+    if match_against_known_pulse(pulses, team_1):
+        print("Nerf Blast Team1")
+        return 1
+    if match_against_known_pulse(pulses, team_2):
+        print("Nerf Blast Team2")
+        return 2
+    return None
+
+rgb_off()
+# [0, 6[
+current_hue = 0
+# 0 to 100
+current_intensity = 0
+speed = 1
+
+power = True
+
+while True:
+    if power:
+        current_intensity = current_intensity + speed
+
+        if current_intensity >= 100:
+            speed = speed * -1
+
+        if current_intensity <= 0:
+            speed = speed * -1
+            current_hue = (current_hue + 0.3) % 6
+
+        set_color_hsl(current_hue, 1, current_intensity / 200)
+    else:
+        rgb_off()
+
+    pulses = decoder.read_pulses(pulsein, blocking= False)
+    if pulses:
+        print("Heard", len(pulses), "Pulses:", pulses)
+
+        nerfBlast = match_nerf_pulses(pulses)
+        if nerfBlast == 1:
+            set_color_hsl(1, 1, 0.5)
+            time.sleep(2)
+        elif nerfBlast == 2:
+            set_color_hsl(3, 1, 0.5)
+            time.sleep(2)
+
+        else:
+            # Not a nerf blast - maybe a IR command
+            try:
+                code = decoder.decode_bits(pulses)
+                print("Decoded:", code)
+                if len(code) == 5 and code[0:4] == [0xde, 0xad, 0xbe, 0xef]:
+                    print("Got command: {}".format(code[4]))
+                    do_the_color_ramp_dance(code[4] * 6.0 / 255, 2, True, 5)
+
+                if code == [124, 93]:
+                    print("Power!")
+                    power = not power
+
+            except adafruit_irremote.IRNECRepeatException:  # unusual short code!
+                print("NEC repeat!")
+            except adafruit_irremote.IRDecodeException as e:     # failed to decode
+                print("Failed to decode: ", e.args)
