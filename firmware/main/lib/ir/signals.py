@@ -3,8 +3,8 @@ class Signals(object):
     tolerance = 0
     UNKNOWN = None
     @classmethod
-    def match(cls, required_len, actual_codes, debug=False):
-        if len(actual_codes) != required_len:
+    def match(cls, actual_codes, required_len=None, debug=False):
+        if required_len is not None and len(actual_codes) != required_len:
             if debug: print("wrong number of codes {}".format(len(actual_codes)))
             return Signals.UNKNOWN
         for kind, code in cls._signals.items():

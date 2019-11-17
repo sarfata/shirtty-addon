@@ -42,8 +42,8 @@ class Codes():
     @staticmethod
     def match(actual_codes, debug=False):
         if actual_codes is None: return Signals.UNKNOWN
-        adafuit = Codes.adafruit.match(4, actual_codes, debug)
+        adafuit = Codes.adafruit.match(actual_codes, debug)
         if adafuit: return adafuit
-        shirtty = Codes.shirtty.match(actual_codes)
+        shirtty = Codes.shirtty.match(actual_codes, debug)
         if shirtty: return shirtty
         return Signals.UNKNOWN

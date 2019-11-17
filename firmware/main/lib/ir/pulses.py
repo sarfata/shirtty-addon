@@ -13,6 +13,6 @@ class Pulses():
     @staticmethod
     def match(actual_pulses, debug=False):
         if not actual_pulses: return Signals.UNKNOWN
-        nerf = Pulses.nerf.match(17, actual_pulses, debug)
+        nerf = Pulses.nerf.match(actual_pulses, 17, debug)
         if nerf: return nerf
         return Signals.UNKNOWN
