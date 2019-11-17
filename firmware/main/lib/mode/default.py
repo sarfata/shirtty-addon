@@ -3,6 +3,7 @@ from color import ShittyRgb
 from ir.pulses import Pulses
 from ir.codes import Codes
 from ir import ShittyIr
+from ir.react_to import react_to
 
 def start():
     shit_ir = ShittyIr()
@@ -15,18 +16,18 @@ def start():
     current_intensity = 0
     speed = 1
     power = True
-    # -- PULSE HANDLERS --
+    # -- PULSE REACTORS --
     def team_1():
         shit_rgb.set_color_hsl(1, 1, 0.5)
         time.sleep(2)
     def team_2():
         shit_rgb.set_color_hsl(3, 1, 0.5)
         time.sleep(2)
-    pulse_handlers = {
+    pulse_reactors = {
         Pulses.nerf.NERF_TEAM_1: team_1,
         Pulses.nerf.NERF_TEAM_2: team_2,
     }
-    # -- CODE HANDLERS --
+    # -- CODE REACTORS --
     def match_me(code):
         print("Match Me!")
         shit_ir.blast([0xde, 0xad, 0xbe, 0xef, round(current_hue / 6 * 255)])
@@ -36,24 +37,12 @@ def start():
     def flip_power(code):
         print("Power!")
         power = not power
-    code_handlers = {
+    code_reactors = {
         Codes.adafruit.ADAFRUIT_1: match_me,
         Codes.adafruit.ADAFRUIT_2: lambda code: shit_ir.tx.toggle(),
         Codes.shirtty.COLOR_SYNC: get_matched,
         Codes.sharp.POWER: flip_power
     }
-    def handle(pulses):
-        pulse_match = Pulses.match(pulses)
-        if pulse_match:
-            print("PULSE")
-            pulse_handlers[pulse_match]()
-            return
-        code = shit_ir.rx.get_code(pulses)
-        code_match = Codes.match(code, debug=True)
-        if code_match:
-            print("CODE")
-            code_handlers[code_match](code)  
-            return
     while True:
         if shit_rgb.is_on:
             if power:
@@ -66,5 +55,4 @@ def start():
                 shit_rgb.set_color_hsl(current_hue, 1, current_intensity / 200)
             else:
                 shit_rgb.rgb_off()
-        pulses = shit_ir.rx.get_pulses()
-        handle(pulses)
+        react_to(shit_ir, pulse_reactors, code_reactors)
