@@ -4,10 +4,17 @@ from ir.pulses import Pulses
 from ir.codes import Codes
 from ir import ShittyIr
 from ir.react_to import react_to
+import digitalio
+import board
 
 def start():
     shit_ir = ShittyIr()
     shit_rgb = ShittyRgb()
+
+    sao_out = digitalio.DigitalInOut(board.SDA) 
+    sao_out.direction = digitalio.Direction.OUTPUT
+    sao_out.value = 0
+
     shit_rgb.on()
     # -- STATES --
     # [0, 6[
@@ -18,11 +25,15 @@ def start():
     power = True
     # -- PULSE REACTORS --
     def team_1():
+        sao_out.value = 1
         shit_rgb.set_color_hsl(1, 1, 0.5)
         time.sleep(2)
+        sao_out.value = 0
     def team_2():
+        sao_out.value = 1
         shit_rgb.set_color_hsl(3, 1, 0.5)
         time.sleep(2)
+        sao_out.value = 0
     pulse_reactors = {
         Pulses.nerf.NERF_TEAM_1: team_1,
         Pulses.nerf.NERF_TEAM_2: team_2,
