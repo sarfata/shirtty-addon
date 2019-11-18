@@ -3,6 +3,10 @@
 A CircuitPython compatible, SAMD21 shitty addon with IR transmit/receive and RGB
 LED.
 
+
+
+## Bugs / Issues on v1.
+
 **IMPORTANT** To make things more shitty the SAO header is upside down on the
 badge. You will need a shitty inverser (included in this repo) or to put the
 addon upside down. 
@@ -11,6 +15,17 @@ This is the pinout when looking at the face of the badge. Note that VCC is
 bottom right (bottom left if you are looking at the connector).
 
 ![pinout](pinout.png)
+
+
+ [ ] the SAO connector is upside down
+ [ ] we need more capacitance on the +3V line otherwise we brown out when
+ transmitting IR
+ [ ] replace the very unreliable PCB usb connector by a micro usb connector
+ [ ] make the reset button smaller so we can actually fit a SMD 6 pin SAO
+ shrouded connector
+ [ ] expose some GPIOs? 
+
+
 
 ## Micropython variant
 
