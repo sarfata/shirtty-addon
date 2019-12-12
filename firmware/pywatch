@@ -1,0 +1,4 @@
+# fswatch -o $1| while read num; do cp $1 /Volumes/CIRCUITPY/lib;echo "sync";done
+
+# pywatch /lib/*
+fswatch -o $*| while read num; do cp $* /Volumes/CIRCUITPY/lib;echo "sync";done
