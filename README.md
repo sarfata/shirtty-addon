@@ -17,13 +17,15 @@ bottom right (bottom left if you are looking at the connector).
 ![pinout](pinout.png)
 
 
- [ ] the SAO connector is upside down
- [ ] we need more capacitance on the +3V line otherwise we brown out when
- transmitting IR
- [ ] replace the very unreliable PCB usb connector by a micro usb connector
- [ ] make the reset button smaller so we can actually fit a SMD 6 pin SAO
- shrouded connector
- [ ] expose some GPIOs? 
+### TODOs
+
+- [ ] the SAO connector is upside down
+- [ ] we need more capacitance on the +3V line otherwise we brown out when
+    transmitting IR
+- [ ] replace the very unreliable PCB usb connector by a micro usb connector
+- [ ] make the reset button smaller so we can actually fit a SMD 6 pin SAO
+    shrouded connector
+- [ ] expose some GPIOs? 
 
 
 
